@@ -81,13 +81,17 @@ def main():
             #                                     ROOT_PATH + "position-array",
             #                                     "types/datalayer/string")
 
-            provider_node_x = provide_int32(provider,
-                                                ROOT_PATH + "x",
-                                                "types/datalayer/int32")
+            # provider_node_x = provide_int32(provider,
+            #                                     ROOT_PATH + "x",
+            #                                     "types/datalayer/int32")
 
-            provider_node_y = provide_int32(provider,
-                                                ROOT_PATH + "y",
-                                                "types/datalayer/int32")
+            # provider_node_y = provide_int32(provider,
+            #                                     ROOT_PATH + "y",
+            #                                     "types/datalayer/int32")
+            
+            provider_node_positions = provide_string(provider,
+                                                ROOT_PATH + "positions",
+                                                "types/datalayer/string")
 
             while provider.is_connected() and not __close_app:
                 web.request_handler.data_layer = app.datalayer.DataLayer()
@@ -103,12 +107,14 @@ def main():
                     flush=True)
 
             # provider_node_str.unregister_node()
-            provider_node_x.unregister_node()
-            provider_node_y.unregister_node()
+            # provider_node_x.unregister_node()
+            # provider_node_y.unregister_node()
+            provider_node_positions.unregister_node()
 
             # del provider_node_str
-            del provider_node_x
-            del provider_node_y
+            # del provider_node_x
+            # del provider_node_y
+            del provider_node_positions
 
             print("Stopping ctrlX Data Layer provider:", end=" ", flush=True)
             result = provider.stop()
@@ -133,7 +139,7 @@ def provide_string(provider: ctrlxdatalayer.provider, nodeAddress: str,
     # Create and register simple string provider node
     print("Creating string  provider node " + nodeAddress, flush=True)
     variantString = Variant()
-    variantString.set_string("[{ x: 0, y: 0 },{ x: 60, y: 90 },{ x: 120, y: 180 },{ x: 180, y: 45 },{ x: 240, y: 180 },{ x: 300, y: 90 },{ x: 360, y: 0 }]")
+    variantString.set_string('[{ "x": 4300, "y": 28000, "theta": 10},{ "x": 4300, "y": 30000, "theta": 78},{ "x": 6300, "y": 32000, "theta": 45}]')
     return provide_node(provider, nodeAddress, typeAddress, variantString)
 
 
